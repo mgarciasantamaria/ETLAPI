@@ -1,0 +1,48 @@
+17:40:47	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\main.py\", line 14, in main\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+17:43:03	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\main.py\", line 14, in main\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+17:55:25	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\main.py\", line 14, in main\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+11:13:44	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\vtr.py\", line 14, in mainvtr\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+11:15:44	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\vtr.py\", line 14, in mainvtr\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+11:31:31	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\vtr.py\", line 14, in mainvtr\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+11:34:33	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\modules\\vtrapp.py\", line 14, in mainvtr\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
+11:43:01	{
+    "Error": {
+        "Error": "[Errno 2] No such file or directory: '/mnt/ingbox/DATA_VTR/sdertt.csv'",
+        "error_info": "  File \"C:\\Users\\mgarcia\\OneDrive - VC MEDIOS COLOMBIA S.A\\Documentos\\PYTHON\\FastApi\\modules\\vtrapp.py\", line 14, in mainvtr\n    df=pd.read_csv(log_path, delimiter=',', low_memory=False)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+    }
+}
