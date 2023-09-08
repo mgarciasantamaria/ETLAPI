@@ -1,0 +1,98 @@
+11:32:17	{
+        "Log_summary": "E1QTKS05SVX32L.2023-09-07-00.d67a5add.gz",
+        "Lines_processed": "214757",
+        "New_manifests_Registered": "261",
+        "New_segments_Registered": "76691",
+        "Vmx_segments": "30301",
+        "Process_duration": "8.232"
+}
+11:57:52	{
+        "Log_summary": "E1QTKS05SVX32L.2023-09-07-00.d67a5add.gz",
+        "Lines_processed": "214757",
+        "New_manifests_Registered": "261",
+        "New_segments_Registered": "76691",
+        "Vmx_segments": "30301",
+        "Process_duration": "7.427"
+}
+11:58:22	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.125"
+}
+11:58:48	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.063"
+}
+11:59:07	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.011"
+}
+12:03:04	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.191"
+}
+12:07:02	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.067"
+}
+12:17:28	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.041"
+}
+12:53:08	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.198"
+}
+12:59:06	etltoolbox_PROD application failure not recognized
+
+12:59:34	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "119",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "39",
+        "Process_duration": "1.093"
+}
+14:38:50	{
+        "Log_summary": "E1G18CYS20VP1J.2023-04-18-21.291d1faa.gz",
+        "Lines_processed": "0",
+        "New_manifests_Registered": "0",
+        "New_segments_Registered": "0",
+        "Vmx_segments": "0",
+        "Process_duration": "1.17",
+        "Log_Error": {
+                "Error": "name 'llog_path' is not defined",
+                "error_info": "  File \"C:\\Users\\mgarcia\\PyProject\\DEV\\ETLAPI\\apps\\etltoolbox\\toolboxmain.py\", line 31, in toolbox_main\n    with gzip.open(f'{llog_path}', 'rt') as file:\n                      ^^^^^^^^^\n"
+        }
+}
+14:57:14	etltoolbox_PROD application failure not recognized
+
+15:41:09	etltoolbox_PROD application failure not recognized
+
