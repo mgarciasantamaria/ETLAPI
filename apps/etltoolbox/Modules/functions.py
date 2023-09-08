@@ -25,7 +25,12 @@ def download_log(log_key):
         S3Transfer(s3_client, TransferConfig(max_bandwidth=5000000)).download_file(Bucket_logs,log_key,log_Path)
         return log_Path
     except Exception as error:
-        return{"download_error": str(error)}
+        error=sys.exc_info()[2]
+        errorinfo=traceback.format_tb(error)[0]
+        return {
+                'Error': str(sys.exc_info()[1]),
+                'error_info': errorinfo
+            }
 
 
 def print_log(OPTION, TEXT, DATE_LOG):

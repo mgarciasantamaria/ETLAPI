@@ -20,7 +20,7 @@ def toolbox_main(log_key):
             if type(responde_download_log) == dict:
                 curpsql.close() #Se cierra la conexion con el cursor de la base de datos.
                 postgresql.close() #Se cierra la conexion con la base de datos.
-                dict_summary['download_Error']=responde_download_log['download_error']
+                dict_summary['download_Error']=responde_download_log
                 dict_summary_srt=json.dumps(dict_summary, sort_keys=True, indent=4)
                 print_log('a', dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
                 mail_subject='etltoolbox_PROD error Download Logs' #Se establece el asunto del correo.
