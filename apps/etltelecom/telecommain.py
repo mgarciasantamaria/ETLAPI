@@ -93,6 +93,7 @@ def telecom_main(log_key):
             SendMail(dict_summary_str, 'Summary telecom Data Playbacks')
             cdndb_cur.close()
             cdndb_connect.close()
+            print(dict_summary_str)
             return f"{log_key} processed", 200
     except:
         cdndb_cur.close()
@@ -104,6 +105,7 @@ def telecom_main(log_key):
             'error_info': errorinfo
         }
         dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4)
+        print(dict_summary_str)
         print_log(dict_summary_str)
         mail_subject='FAIL etltelecom_PROD Execution Error'
         SendMail(dict_summary_str, mail_subject)
