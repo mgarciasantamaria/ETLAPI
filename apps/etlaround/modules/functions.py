@@ -192,7 +192,6 @@ def playbacks_task(summary_dict):
         curpsql=postgresql.cursor() #Se activa el cursor en la base de datos.
         for index in summary_dict.keys():
             data=summary_dict[index]
-            print(data)
             if len(data)==21:
                 curpsql.execute(f"SELECT segmentos FROM {db_table} WHERE manifestid LIKE '{data['manifestid']}';")
                 rowcount=curpsql.rowcount
