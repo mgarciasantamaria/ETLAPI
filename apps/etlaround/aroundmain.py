@@ -14,7 +14,7 @@ def around_main(log_key):
             count_segments=0
             quantity=0
             #Se recoge la lista de los archivos logs descargados que entrega la funcion Download_Logs.
-            response_download_log=download_log(date_log)
+            response_download_log=download_log(log_key)
             if 'Error:' in response_download_log:
                 dict_summary['download_log_error'] = response_download_log
                 dict_summary['log'] = log_key
