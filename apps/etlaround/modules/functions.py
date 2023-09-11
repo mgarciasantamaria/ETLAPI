@@ -1,7 +1,7 @@
 #Funciones
 import re, urllib, urllib3, json, datetime, psycopg2, sys, traceback, smtplib, boto3
 import pandas as pd
-from modules.constants import *
+from apps.etlaround.modules.constants import *
 from email.message import EmailMessage
 from boto3.s3.transfer import S3Transfer, TransferConfig
 

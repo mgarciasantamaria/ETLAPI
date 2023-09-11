@@ -1,5 +1,5 @@
-from modules.constants import *
-from modules.functions import *
+from apps.etlaround.modules.constants import *
+from apps.etlaround.modules.functions import *
 import gzip, io, time, shutil
 #Inicio del codigo principal
 def around_main(log_key):
