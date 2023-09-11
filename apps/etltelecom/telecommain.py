@@ -82,9 +82,9 @@ def telecom_main(log_key):
             xmldata.duration,
             telecomdata.segduration;
             """
-            #cdndb_cur.execute(sql)
+            cdndb_cur.execute(sql)
             dict_summary[csv_file_path].update({'sum_Insert_Playbacks': cdndb_cur.rowcount})
-            #cdndb_connect.commit()
+            cdndb_connect.commit()
             cdndb_cur.execute('DELETE FROM telecomdata;')
             cdndb_connect.commit()
             os.remove(csv_file_path)
