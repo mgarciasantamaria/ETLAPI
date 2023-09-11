@@ -6,7 +6,7 @@ aws_profile='pythonapps' #Nombre del perfil de aconexion a AWS
 Downloads_Path="./apps/etltelecom/s3download"
 Bucket_logs='logs-telecom-arg' #Use (functions:Dowload_Logs)
 Bucket_logs_old='logs-telecom-arg-old' #Use (functions:Dowload_Logs)
-Mail_To=['mgarcia@vcmedios.com.co'] #E-mail de destino 
+Mail_To=['ingenieriavcmc@vcmedios.com.co', 'cparada@vcmedios.con.co'] #E-mail de destino 
 Buckets={   #Diccionario con keys y values que identifican el canal y el bucket segun contentid.
     "11": ["aenla-in-toolbox", "A&E"],
     "21": ["aenla-in-toolbox", "History"],
