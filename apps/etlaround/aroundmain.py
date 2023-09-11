@@ -110,7 +110,7 @@ def around_main(log_key):
                         'Segments': str(count_segments),
                         'Summary': summary_dict
                     }
-                    dict_summary=json.dumps(dict_log, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
+                    dict_summary_str=json.dumps(dict_log, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
                     print(dict_summary_str)
                     print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     #shutil.move(log_path, destination_Path+log_key)
