@@ -114,6 +114,7 @@ def around_main(log_key):
                     print(dict_summary_str)
                     print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     #shutil.move(log_path, destination_Path+log_key)
+                    return f"{log_key} processed", 404
         except:
             Flag_Status("w") #Se cambia el estado de la bandera "FLAG" a false.
             error=sys.exc_info()[2] #Captura del error generado por el sistema.
