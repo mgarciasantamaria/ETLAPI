@@ -17,7 +17,7 @@ def toolbox_main(log_key):
             postgresql=psycopg2.connect(data_base_connect)
             curpsql=postgresql.cursor()
             responde_download_log=download_log(log_key)
-            if type(responde_download_log) == dict:
+            if 'Error:' in responde_download_log:
                 curpsql.close() #Se cierra la conexion con el cursor de la base de datos.
                 postgresql.close() #Se cierra la conexion con la base de datos.
                 dict_summary['download_Error']=responde_download_log
@@ -26,7 +26,7 @@ def toolbox_main(log_key):
                 mail_subject='etltoolbox_PROD error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_srt, mail_subject) #Se envia correo electronico.
                 return dict_summary, 404
-            elif type(responde_download_log) == str:
+            else:
                 log_path=responde_download_log
                 with gzip.open(f'{log_path}', 'rt') as file:
                     for line in file:

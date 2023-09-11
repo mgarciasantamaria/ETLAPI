@@ -26,11 +26,8 @@ def download_log(log_key):
         return log_Path
     except:
         error=sys.exc_info()[2]
-        errorinfo=traceback.format_tb(error)[0]
-        return {
-                'Error': str(sys.exc_info()[1]),
-                'error_info': errorinfo
-            }
+        errorinfo=str(traceback.format_tb(error)[0])
+        return """Error: str(sys.exc_info()[1])\n\nerror_info: errorinfo"""
 
 
 def print_log(OPTION, TEXT, DATE_LOG):
