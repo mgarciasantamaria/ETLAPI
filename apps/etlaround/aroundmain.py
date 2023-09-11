@@ -97,9 +97,9 @@ def around_main(log_key):
                         'data_dict': summary_dict 
                     }
                     dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
-                    print_log(dict_log_srt, date_log) #Se registra en el log de eventos el resumen.
+                    print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     mail_subject='FAIL API etlaround PROD execution error' #Se establece el asunto del correo.
-                    SendMail(dict_log_srt, mail_subject) #Se envia correo electronico.
+                    SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
                     return dict_summary, 404
                 else:
                     finish=time.time() #Captura del tiempo en el instante que termina de procesar un log.
@@ -110,7 +110,7 @@ def around_main(log_key):
                         'Segments': str(count_segments),
                         'Summary': summary_dict
                     }
-                    dict_summary_str=json.dumps(dict_log, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
+                    dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
                     print(dict_summary_str)
                     print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     #shutil.move(log_path, destination_Path+log_key)
@@ -118,15 +118,15 @@ def around_main(log_key):
             Flag_Status("w") #Se cambia el estado de la bandera "FLAG" a false.
             error=sys.exc_info()[2] #Captura del error generado por el sistema.
             errorinfo=traceback.format_tb(error)[0] #Cartura del detalle del error.
-            dict_log['Log_Error']={
+            dict_summary['Log_Error']={
                 'Error': str(sys.exc_info()[1]),
                 'error_info': errorinfo
             }
-            dict_log_srt=json.dumps(dict_log, sort_keys=True, indent=4) #Se transforma el diccionario a formato texto.
+            dict_summary_str=json.dumps(dict_log, sort_keys=True, indent=4) #Se transforma el diccionario a formato texto.
             print(str(sys.exc_info()[1]), errorinfo, sep='\n\n')
-            print_log(dict_log_srt, date_log) #Se registra en el log de eventos el resumen.
+            print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
             mail_subject='FAIL etlaround PROD execution error status: FALSE' #Se establece el asunto del correo.
-            SendMail(dict_log_srt, mail_subject) #Se envia correo electronico.
+            SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
             return dict_summary, 404
 
     else:
