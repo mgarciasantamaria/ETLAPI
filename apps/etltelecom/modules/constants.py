@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 #_*_ codig: utf8 _*_
-log_Path="./apps/etltelecom/logs" # Ruta del folder donde se alojan los archivos logs
-data_base_connect_prod="host=10.10.130.152 dbname=toolboxprod user=vodaplications password=V0D-20234pl1c4t10ns" #Datos para establecer conexion con la base de datos de produccion.
-aws_profile='pythonapps' #Nombre del perfil de aconexion a AWS
-Downloads_Path="./apps/etltelecom/s3download"
-Bucket_logs='logs-telecom-arg' #Use (functions:Dowload_Logs)
-Bucket_logs_old='logs-telecom-arg-old' #Use (functions:Dowload_Logs)
-Mail_To=['ingenieriavcmc@vcmedios.com.co', 'cparada@vcmedios.con.co'] #E-mail de destino 
-Buckets={   #Diccionario con keys y values que identifican el canal y el bucket segun contentid.
+
+#SendMail function constants
+msg_From = 'alarmas-aws@vcmedios.com.co'
+msg_To = ['ingenieriavcmc@vcmedios.com.co', 'cparada@vcmedios.con.co']
+smtp_Host = '10.10.130.217'
+
+#ExtractXmlData function constants
+count_xml_not_found=0
+data_insert=0
+xml_not_found=[]
+buckets={   #Diccionario con keys y values que identifican el canal y el bucket segun contentid.
     "11": ["aenla-in-toolbox", "A&E"],
     "21": ["aenla-in-toolbox", "History"],
     "31": ["aenla-in-toolbox", "Lifetime"],
@@ -16,7 +19,7 @@ Buckets={   #Diccionario con keys y values que identifican el canal y el bucket 
     "52": ["spe-in-toolbox", "SONY-MOVIES"],
     "61": ["spe-in-toolbox", "SONY"],
     "62": ["spe-in-toolbox", "SONY-AXN"],
-    }
+}
 channels_Id={
     "HISTORY" : "21",
     "LIFETIME" : "31",
@@ -24,3 +27,19 @@ channels_Id={
     "AXN" : "51",
     "SONYAXN" : "62"
 }
+
+#DownloadLog functions constants
+Downloads_Path="./apps/etltelecom/s3download"
+Bucket_logs='logs-telecom-arg' #Use (functions:Dowload_Logs)
+
+#extractXmlData and DownloadLog functions constants
+aws_Profile='pythonapps'
+
+#extractXmlData and main functions constants
+database_Connect="host=10.10.130.152 dbname=toolboxprod user=vodaplications password=V0D-20234pl1c4t10ns"
+
+#PrintLog function constants
+log_Path="./apps/etltelecom/logs" # Ruta del folder donde se alojan los archivos logs
+
+#main constants
+dict_summary={}

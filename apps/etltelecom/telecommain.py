@@ -6,7 +6,6 @@ from apps.etltelecom.modules.functions import *
 
 def telecom_main(log_key):
     try:
-        dict_summary={}
         response_download_log=download_log(log_key)
         if 'Error:' in response_download_log:
             dict_summary['download_log_error']= response_download_log
@@ -17,7 +16,7 @@ def telecom_main(log_key):
             SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
             return dict_summary, 404
         else:
-            cdndb_connect=psycopg2.connect(data_base_connect_prod)
+            cdndb_connect=psycopg2.connect(database_Connect)
             cdndb_cur=cdndb_connect.cursor()
             csv_file_path=response_download_log
             with open(csv_file_path, 'r', encoding="latin1") as csv_data:

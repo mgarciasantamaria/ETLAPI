@@ -6,24 +6,19 @@ from apps.etltoolbox.Modules.constants import *
 
 def toolbox_main(log_key):
     date_log=str(datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d"))
-    if Flag_Status('r'):    
+    if FlagStatus('r'):    
         try:
-            dict_summary={}
-            count_newmanifest=0
-            count_VmxSegments=0
-            count_newsegments=0
-            quantity=0
             beginning=time.time()
-            postgresql=psycopg2.connect(data_base_connect)
+            postgresql=psycopg2.connect(database_Connect)
             curpsql=postgresql.cursor()
-            responde_download_log=download_log(log_key)
+            responde_download_log=DownloadLog(log_key)
             if 'Error:' in responde_download_log:
                 curpsql.close() #Se cierra la conexion con el cursor de la base de datos.
                 postgresql.close() #Se cierra la conexion con la base de datos.
                 dict_summary['download_Error'] = responde_download_log
                 dict_summary['log'] = log_key
                 dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=4)
-                print_log('a', dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
+                PrintLog('a', dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
                 mail_subject='API etltoolbox_PROD error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_srt, mail_subject) #Se envia correo electronico.
                 return dict_summary, 404
@@ -55,8 +50,8 @@ def toolbox_main(log_key):
                                         columns[11].split('&')[4][2:],  # device
                                         profile[Type][0],               # Segment Duration
                                         )
-                                    #curpsql.execute(SQL,DATA)
-                                    #postgresql.commit()
+                                    curpsql.execute(SQL,DATA)
+                                    postgresql.commit()
                                     count_newmanifest+=1
                             elif len(Uri)>5 and Uri[1]=='prod':
                                 Video_Validate=Uri[4]=='video' or 'HD' in Uri[4] or 'SD' in Uri[4] or 'video' in Uri[5]
@@ -77,9 +72,9 @@ def toolbox_main(log_key):
                                             profile[Type][1],               # Type
                                             Uri[3],                         # Mediaid
                                             )    
-                                        #curpsql.execute(SQL, DATA)
+                                        curpsql.execute(SQL, DATA)
                                         count_newsegments+=1
-                                        #postgresql.commit()
+                                        postgresql.commit()
                                     elif len(columns[11].split('?'))==2:
                                         Type=Uri[3].split('.')[1]
                                         Query=columns[11].split('?')[0]
@@ -95,9 +90,9 @@ def toolbox_main(log_key):
                                             profile[Type][1],               # Type
                                             Uri[3],                         # Mediaid
                                             )    
-                                        #curpsql.execute(SQL, DATA)
+                                        curpsql.execute(SQL, DATA)
                                         count_newsegments+=1
-                                        #postgresql.commit()
+                                        postgresql.commit()
                                 elif Status_Validate and Video_Validate and Segment_Validate:
                                     Type=Uri[3].split('.')[1]
                                     if Type=='vmxmpd' or Type=='vmxm3u8':
@@ -111,15 +106,15 @@ def toolbox_main(log_key):
                 dict_summary['Process_duration']=str(round((finish-beginning),3))
                 dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=8)
                 print(dict_summary_srt)
-                print_log("a", dict_summary_srt, date_log)
+                PrintLog("a", dict_summary_srt, date_log)
                 file_Name=os.path.basename(log_path)
-                #shutil.move(log_path, destination_Path+file_Name)
+                shutil.move(log_path, destination_Path+file_Name)
                 curpsql.close()
                 postgresql.close() #Postgresqlv
                 return dict_summary, 200
         except:
             finish=time.time()
-            Flag_Status("w")
+            FlagStatus("w")
             curpsql.close()
             postgresql.close() #Postgresql
             error=sys.exc_info()[2]
@@ -135,12 +130,12 @@ def toolbox_main(log_key):
                 'error_info': errorinfo
             }
             dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=8)
-            print_log("a", dict_summary_srt, date_log)
+            PrintLog("a", dict_summary_srt, date_log)
             mail_subject='FAIL etltoolbox_PROD Execution Error'
             SendMail(dict_summary_srt, mail_subject)
             return dict_summary, 404
     else:
         text_print="etltoolbox_PROD application failure not recognized\n"
-        print_log("a", text_print, date_log)
+        PrintLog("a", text_print, date_log)
         return text_print, 404
     

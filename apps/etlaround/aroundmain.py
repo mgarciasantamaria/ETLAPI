@@ -6,20 +6,16 @@ def around_main(log_key):
     #Se recoge el dato de fecha y hora en el instante en que se ejecuta el codigo.
     date_log=str(datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d"))
     #Se consulta el estado de la bandera "FLAG" en el archivo json.
-    if Flag_Status('r'):
+    if FlagStatus('r'):
         try:
             beginning=time.time()
-            dict_summary={}
-            dict_log={}
-            count_segments=0
-            quantity=0
             #Se recoge la lista de los archivos logs descargados que entrega la funcion Download_Logs.
-            response_download_log=download_log(log_key)
+            response_download_log=DownloadLog(log_key)
             if 'Error:' in response_download_log:
                 dict_summary['download_log_error'] = response_download_log
                 dict_summary['log'] = log_key
                 dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4)
-                print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
+                PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                 mail_subject='FAIL API around_PROD error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
                 return dict_summary, 404
@@ -36,13 +32,13 @@ def around_main(log_key):
                 df_manifests=df[((df['cs-uri-stem'].str.endswith('index.m3u8')) | (df['cs-uri-stem'].str.endswith('index.mpd')) | (df['cs-uri-stem'].str.endswith('Manifest'))) & ((df['sc-status']==200) | (df['sc-status']==206))][['date', 'time', 'cs-uri-stem', 'cs-uri-query', 'x-edge-request-id', ]]
                 if not(df_manifests.empty):
                     #Se aplica la funcion Uri_Transform a todos los datos de la columna 'cs-uri-stem', los cuales se transforman en una lista con los datos mso_name, country, uri_id
-                    df_manifests['cs-uri-stem']=df_manifests['cs-uri-stem'].map(Uri_Transform)
+                    df_manifests['cs-uri-stem']=df_manifests['cs-uri-stem'].map(UriTransform)
                     #Se dividen los datos de la lista anterior para ser agregados al mismo dataframe como tres columnas
                     df_manifests['mso'], df_manifests['country'], df_manifests['uri_id']=zip(*df_manifests['cs-uri-stem'])
                     #Se aplica la funcion request_id_transform la cual transforma los datos de la columna 'x-edge-request-id', el resultado se guarda en una nueva columna 'manifestid' del mismo dataframe.   
-                    df_manifests['manifestid']=df_manifests['x-edge-request-id'].map(request_id_transform)
+                    df_manifests['manifestid']=df_manifests['x-edge-request-id'].map(RequestIdTransform)
                     #Se aplica la funcion Manifest_Query_Transform a los datos de la columna 'cs-quri-query' y se crea una nueva columna 'client_id' con los datos transformados.
-                    df_manifests['client_id']=df_manifests['cs-uri-query'].map(Manifest_Query_Transform)
+                    df_manifests['client_id']=df_manifests['cs-uri-query'].map(ManifestQueryTransform)
                     #Se crea una nueva columna 'datetime' a partir de la union de las columnas 'date' y 'time'. 
                     df_manifests['datetime']=df_manifests['date'] + " " + df_manifests['time']
                     #Se eliminan las columnas a las cuales se les aplicado la transformacion.
@@ -61,7 +57,7 @@ def around_main(log_key):
                 df_segments=df[((df['cs-uri-stem'].str.contains(r"index_video_\d+_\d+_\d+.mp4")) | (df['cs-uri-stem'].str.contains(r"Fragments\(v=\d+\)")) | (df['cs-uri-stem'].str.contains(r"index_\d+_\d+.ts"))) & ((df['sc-status']==200) | (df['sc-status']==206))][['date', 'time', 'cs-uri-stem', 'cs-uri-query', 'cs(User-Agent)']]
                 if not(df_segments.empty):
                     #Se aplica la funcion Segments_Query_Transform a la columna 'cs-uri-query' el resultado se guarda en una lista.
-                    df_segments['cs-uri-query']=df_segments['cs-uri-query'].map(Segments_Query_Transform)
+                    df_segments['cs-uri-query']=df_segments['cs-uri-query'].map(SegmentsQueryTransform)
                     #Se dividen los datos de la lista anterior para ser agregados al mismo dataframe como 2 columnas
                     df_segments['device'], df_segments['manifestid']=zip(*df_segments['cs-uri-query'])
                     condition = ~(df_segments['cs(User-Agent)'].str.contains(r"Mozilla/.*", na=False)) & (df_segments['device'].str.contains('desktop', na=False))
@@ -79,7 +75,7 @@ def around_main(log_key):
                 df_merge['segmentos']*=10
                 df_merge['segmentos']=df_merge['segmentos'].fillna(0)
 
-                df_data=Metadata_Extract(df_merge['uri_id'].drop_duplicates().dropna())
+                df_data=MetadataExtract(df_merge['uri_id'].drop_duplicates().dropna())
 
                 df_merge2=pd.merge(df_merge[['manifestid', 'datetime', 'mso', 'country', 'client_id', 'device', 'segmentos', 'uri_id']], df_data[['uri_id','assetid', 'humanid', 'servicetype', 'contenttype', 'channel', 'title', 'serietitle', 'releaseyear', 'season', 'episode', 'genre', 'rating', 'duration']], on='uri_id', how='left')
                 df_merge2=df_merge2.fillna('None')
@@ -90,14 +86,14 @@ def around_main(log_key):
                     for inner_key in keys_to_remove:
                         value.pop(inner_key)
                 
-                playbacks_task_summary=playbacks_task(summary_dict)
+                playbacks_task_summary=PlaybacksTask(summary_dict)
                 if playbacks_task_summary != '':
                     dict_summary[log_key]={
                         'playbacks_task_Error': playbacks_task_summary,
                         'data_dict': summary_dict 
                     }
                     dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
-                    print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
+                    PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     mail_subject='FAIL API etlaround PROD execution error' #Se establece el asunto del correo.
                     SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
                     return dict_summary, 404
@@ -112,11 +108,11 @@ def around_main(log_key):
                     }
                     dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
                     print(dict_summary_str)
-                    print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
-                    #shutil.move(log_path, destination_Path+log_key)
+                    PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
+                    shutil.move(log_path, destination_Path+log_key)
                     return f"{log_key} processed", 200
         except:
-            Flag_Status("w") #Se cambia el estado de la bandera "FLAG" a false.
+            FlagStatus("w") #Se cambia el estado de la bandera "FLAG" a false.
             error=sys.exc_info()[2] #Captura del error generado por el sistema.
             errorinfo=traceback.format_tb(error)[0] #Cartura del detalle del error.
             dict_summary['Log_Error']={
@@ -125,13 +121,13 @@ def around_main(log_key):
             }
             dict_summary_str=json.dumps(dict_log, sort_keys=True, indent=4) #Se transforma el diccionario a formato texto.
             print(str(sys.exc_info()[1]), errorinfo, sep='\n\n')
-            print_log(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
+            PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
             mail_subject='FAIL etlaround PROD execution error status: FALSE' #Se establece el asunto del correo.
             SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
             return dict_summary, 404
 
     else:
         text_print="etlaround_PROD application failure not recognized\n"
-        print_log(text_print, date_log)
+        PrintLog(text_print, date_log)
         return text_print, 404
 

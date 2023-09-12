@@ -17,9 +17,9 @@ def SendMail(text, mail_subject): #se define la función llamada 'SendMail' que 
     msg = EmailMessage() #Se crea un objeto 'EmailMessage' vacío para almacenar los detalles del correo electrónico.
     msg.set_content(text) #Se establece el contenido del correo electrónico utilizando el valor del argumento 'text'.
     msg['Subject'] = mail_subject #Se establece el asunto del correo electrónico utilizando el valor del argumento 'mail_subject'.
-    msg['From'] = 'alarmas-aws@vcmedios.com.co' #Se establece la dirección de correo electrónico del remitente en el encabezado 'From' del correo electrónico.
-    msg['To'] = Mail_To # Se establece la dirección de correo electrónico del destinatario en el encabezado 'To' del correo electrónico. El valor de la variable 'Mail_To' se utiliza como dirección de correo electrónico del destinatario.
-    conexion = smtplib.SMTP(host='10.10.130.217', port=25) #Se crea una conexión SMTP utilizando el host '10.10.130.217' y el puerto '25'.
+    msg['From'] = msg_From #Se establece la dirección de correo electrónico del remitente en el encabezado 'From' del correo electrónico.
+    msg['To'] = msg_To # Se establece la dirección de correo electrónico del destinatario en el encabezado 'To' del correo electrónico. El valor de la variable 'Mail_To' se utiliza como dirección de correo electrónico del destinatario.
+    conexion = smtplib.SMTP(host=smtp_Host, port=25) #Se crea una conexión SMTP utilizando el host '10.10.130.217' y el puerto '25'.
     conexion.ehlo() #Se inicia la conexión SMTP con el servidor.
     conexion.send_message(msg) #Se envía el correo electrónico utilizando el método 'send_message()' del objeto SMTP creado anteriormente.
     conexion.quit() #Se cierra la conexión SMTP utilizando el método quit() del objeto SMTP.
@@ -34,12 +34,9 @@ def SendMail(text, mail_subject): #se define la función llamada 'SendMail' que 
 # fueron procesados exitosamente.
 def extract_xml_data(contentid_list): #Se define la función llamada extract_xml_data que acepta dos argumentos: contentid_list y DATE_LOG.
     try:
-        count_xml_not_found=0
-        data_insert=0
-        xml_not_found=[]
-        cdndb_connect=psycopg2.connect(data_base_connect_prod) #Se establece la conexión a la base de datos PostgreSQL utilizando la información proporcionada en la variable data_base_connect. 
+        cdndb_connect=psycopg2.connect(database_Connect) #Se establece la conexión a la base de datos PostgreSQL utilizando la información proporcionada en la variable data_base_connect. 
         cdndb_cur=cdndb_connect.cursor() #Se crea un cursor curpsql para ejecutar consultas en la base de datos.
-        aws_session=boto3.Session(profile_name=aws_profile) #Se establece una sesión de AWS utilizando el perfil especificado en la variable aws_profile.
+        aws_session=boto3.Session(profile_name=aws_Profile) #Se establece una sesión de AWS utilizando el perfil especificado en la variable aws_profile.
         s3_resource=aws_session.resource('s3') #Se crea un recurso s3_resource para acceder a los objetos de Amazon S3.
         for d in contentid_list: #Se itera a través de cada elemento en la lista contentid_list.
             contentid=d[0] #Se extrae el valor del primer elemento de cada tupla en la lista y se almacena en la variable contentid.
@@ -47,11 +44,11 @@ def extract_xml_data(contentid_list): #Se define la función llamada extract_xml
                 cdndb_cur.execute(f"SELECT channel FROM telecomdata WHERE contentid LIKE '{contentid}' LIMIT 1;")
                 channel=cdndb_cur.fetchall()
                 if channel!=[]:
-                    bucket = Buckets[channels_Id[channel[0][0]]][0] # Se extrae el primer elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'bukect'.
-                    Folder= Buckets[channels_Id[channel[0][0]]][1] # Se extrae el segundo elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'Folder'.
+                    bucket = buckets[channels_Id[channel[0][0]]][0] # Se extrae el primer elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'bukect'.
+                    Folder= buckets[channels_Id[channel[0][0]]][1] # Se extrae el segundo elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'Folder'.
             else:
-                bucket = Buckets[contentid[6:8]][0] # Se extrae el primer elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'bukect'.
-                Folder= Buckets[contentid[6:8]][1] # Se extrae el segundo elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'Folder'.
+                bucket = buckets[contentid[6:8]][0] # Se extrae el primer elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'bukect'.
+                Folder= buckets[contentid[6:8]][1] # Se extrae el segundo elemento del dicionario Buckets segun el key que contenga la variable contentid y se almacena en la variable 'Folder'.
             Object_key = Folder+'/'+contentid+'/'+contentid+'.xml' #se utilizan los valores de bucket y la variable Folder para defiir el nombre del bucket y la ruta del objeto XML en Amazon S3.
             try:
                 xml_data=s3_resource.Bucket(bucket).Object(Object_key).get()['Body'].read().decode('utf-8') #Se obtiene el objeto XML desde Amazon S3, Se lee el contenido del objeto y se almacena en la variable xml_data.
@@ -122,11 +119,10 @@ def extract_xml_data(contentid_list): #Se define la función llamada extract_xml
         return xml_not_found, {'content_Data_Sum': len(contentid_list), 'xml_NoFound_Sum': count_xml_not_found, 'xml_Data_Insert_Sum': data_insert, 'error' : [errorinfo, str(sys.exc_info()[1])]}
 
 #************************************************************--END--*******************************************
-
 def download_log(log_key):
     try:
         csv_path=f'{Downloads_Path}/{log_key}'
-        aws_session=boto3.Session(profile_name=aws_profile)
+        aws_session=boto3.Session(profile_name=aws_Profile)
         s3_client=aws_session.client('s3')
         S3Transfer(s3_client, TransferConfig(max_bandwidth=5000000)).download_file(Bucket_logs,log_key,csv_path)
         return csv_path
