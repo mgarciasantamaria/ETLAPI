@@ -5,6 +5,10 @@ import gzip, io, time, shutil
 def around_main(log_key):
     #Se recoge el dato de fecha y hora en el instante en que se ejecuta el codigo.
     date_log=str(datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d"))
+    dict_summary={}
+    dict_log={}
+    count_segments=0
+    quantity=0
     #Se consulta el estado de la bandera "FLAG" en el archivo json.
     if FlagStatus('r'):
         try:

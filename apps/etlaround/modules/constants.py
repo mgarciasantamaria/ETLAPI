@@ -29,8 +29,4 @@ data_base_connect="host=10.10.130.152 dbname=aroundprod user=vodaplications pass
 db_table='playbacks'
 
 #main functions constants
-dict_summary={}
-dict_log={}
-count_segments=0
-quantity=0
 destination_Path="/mnt/ingbox/LogsCDN/"
