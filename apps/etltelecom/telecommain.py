@@ -5,6 +5,7 @@ from apps.etltelecom.modules.constants import *
 from apps.etltelecom.modules.functions import *
 
 def telecom_main(log_key):
+    dict_summary={}
     try:
         response_download_log=download_log(log_key)
         if 'Error:' in response_download_log:

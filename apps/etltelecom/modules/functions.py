@@ -33,6 +33,9 @@ def SendMail(text, mail_subject): #se define la función llamada 'SendMail' que 
 # extraer información sobre el contenido y almacenarla en la base de datos PostgreSQL. La función devuelve una lista de contentid que 
 # fueron procesados exitosamente.
 def extract_xml_data(contentid_list): #Se define la función llamada extract_xml_data que acepta dos argumentos: contentid_list y DATE_LOG.
+    count_xml_not_found=0
+    data_insert=0
+    xml_not_found=[]
     try:
         cdndb_connect=psycopg2.connect(database_Connect) #Se establece la conexión a la base de datos PostgreSQL utilizando la información proporcionada en la variable data_base_connect. 
         cdndb_cur=cdndb_connect.cursor() #Se crea un cursor curpsql para ejecutar consultas en la base de datos.

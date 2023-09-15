@@ -7,9 +7,6 @@ msg_To = ['ingenieriavcmc@vcmedios.com.co', 'cparada@vcmedios.con.co']
 smtp_Host = '10.10.130.217'
 
 #ExtractXmlData function constants
-count_xml_not_found=0
-data_insert=0
-xml_not_found=[]
 buckets={   #Diccionario con keys y values que identifican el canal y el bucket segun contentid.
     "11": ["aenla-in-toolbox", "A&E"],
     "21": ["aenla-in-toolbox", "History"],
@@ -40,6 +37,3 @@ database_Connect="host=10.10.130.152 dbname=toolboxprod user=vodaplications pass
 
 #PrintLog function constants
 log_Path="./apps/etltelecom/logs" # Ruta del folder donde se alojan los archivos logs
-
-#main constants
-dict_summary={}

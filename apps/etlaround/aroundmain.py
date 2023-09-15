@@ -111,7 +111,6 @@ def around_main(log_key):
                         'Summary': summary_dict
                     }
                     dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
-                    print(dict_summary_str)
                     PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     shutil.move(log_path, destination_Path+log_key)
                     return f"{log_key} processed", 200
@@ -124,7 +123,6 @@ def around_main(log_key):
                 'error_info': errorinfo
             }
             dict_summary_str=json.dumps(dict_log, sort_keys=True, indent=4) #Se transforma el diccionario a formato texto.
-            print(str(sys.exc_info()[1]), errorinfo, sep='\n\n')
             PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
             mail_subject='FAIL etlaround PROD execution error status: FALSE' #Se establece el asunto del correo.
             SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.

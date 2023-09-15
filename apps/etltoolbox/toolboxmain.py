@@ -110,7 +110,6 @@ def toolbox_main(log_key):
                 dict_summary['Vmx_segments']=str(count_VmxSegments)
                 dict_summary['Process_duration']=str(round((finish-beginning),3))
                 dict_summary_srt=json.dumps(dict_summary, sort_keys=False, indent=8)
-                print(dict_summary_srt)
                 PrintLog("a", dict_summary_srt, date_log)
                 file_Name=os.path.basename(log_path)
                 shutil.move(log_path, destination_Path+file_Name)

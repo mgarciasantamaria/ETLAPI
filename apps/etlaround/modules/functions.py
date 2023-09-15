@@ -57,9 +57,11 @@ def FlagStatus(OPTION):
 #Se define la funcion llamada print_log, que toma dos argumentos llamados TEXT, DATE_LOG.
 #La funcion tiene como objetivo registrar en un archivo txt un texto definido en la variable TEXT.
 def PrintLog(TEXT, DATE_LOG):
+    to_Print=f"{str(datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S'))}\t{TEXT}\n"
     log_file=open(f"{log_Path}/{DATE_LOG}_log.txt", "a") #Se abre el archivo de la ruta especificada. Si el archivo no existe este se crea. 
-    log_file.write(f"{str(datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S'))}\t{TEXT}\n") #Se escribe en el archivo log el texo especificado en el argumento TEXT.
+    log_file.write(to_Print) #Se escribe en el archivo log el texo especificado en el argumento TEXT.
     log_file.close() #Se cierra el archivo.
+    print(to_Print)
 #**********************************************************************************************************************************************************************************
 
 #Funcion que transforma los datos

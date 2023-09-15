@@ -29,9 +29,11 @@ def DownloadLog(log_key):
 
 
 def PrintLog(OPTION, TEXT, DATE_LOG):
+    to_Print=f"{str(datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S'))}\t{TEXT}\n"
     log_file=open(f"{summary_log_Path}/{DATE_LOG}_log.txt", OPTION)
-    log_file.write(f"{str(datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S'))}\t{TEXT}\n")
+    log_file.write(to_Print)
     log_file.close()
+    print(to_Print)
 
 def FlagStatus(OPTION):
     with open(json_path, "r") as json_file:
