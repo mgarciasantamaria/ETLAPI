@@ -18,11 +18,6 @@ summary_log_Path="./apps/etltoolbox/Logs" # Test
 json_path="./apps/etltoolbox/json/status.json"
 
 #main Constants
-dict_summary={}
-count_newmanifest=0
-count_VmxSegments=0
-count_newsegments=0
-quantity=0
 database_Connect="host=10.10.130.152 dbname=toolboxprod user=vodaplications password=V0D-20234pl1c4t10ns"
 profile={   #Use (main)
     'mpd': [4, 'Dash', 'm4s'],

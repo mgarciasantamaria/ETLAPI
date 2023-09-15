@@ -5,6 +5,11 @@ from apps.etltoolbox.Modules.constants import *
 import sys, traceback, gzip, time, datetime, json, psycopg2, os, shutil
 
 def toolbox_main(log_key):
+    dict_summary={}
+    count_newmanifest=0
+    count_VmxSegments=0
+    count_newsegments=0
+    quantity=0
     date_log=str(datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d"))
     if FlagStatus('r'):    
         try:
