@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #_*_ codig: utf8 _*_
-import sys, traceback, gzip, time, datetime, json, psycopg2, os, shutil
 from apps.etltoolbox.Modules.functions import *
 from apps.etltoolbox.Modules.constants import *
+import sys, traceback, gzip, time, datetime, json, psycopg2, os, shutil
 
 def toolbox_main(log_key):
     date_log=str(datetime.datetime.strftime(datetime.datetime.now(), "%Y-%m-%d"))
