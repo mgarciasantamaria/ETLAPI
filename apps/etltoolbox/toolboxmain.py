@@ -26,7 +26,6 @@ def toolbox_main(log_key):
                 PrintLog('a', dict_summary_srt, date_log) #Se registra en el log de eventos el resumen.
                 mail_subject='API etltoolbox_PROD error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_srt, mail_subject) #Se envia correo electronico.
-                return dict_summary, 404
             else:
                 log_path=responde_download_log
                 with gzip.open(f'{log_path}', 'rt') as file:
@@ -115,7 +114,6 @@ def toolbox_main(log_key):
                 shutil.move(log_path, destination_Path+file_Name)
                 curpsql.close()
                 postgresql.close() #Postgresqlv
-                return dict_summary, 200
         except:
             finish=time.time()
             FlagStatus("w")
@@ -137,9 +135,7 @@ def toolbox_main(log_key):
             PrintLog("a", dict_summary_srt, date_log)
             mail_subject='FAIL etltoolbox_PROD Execution Error'
             SendMail(dict_summary_srt, mail_subject)
-            return dict_summary, 404
     else:
         text_print="etltoolbox_PROD application failure not recognized\n"
         PrintLog("a", text_print, date_log)
-        return text_print, 404
     
