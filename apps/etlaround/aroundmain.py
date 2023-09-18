@@ -22,7 +22,6 @@ def around_main(log_key):
                 PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                 mail_subject='FAIL API around_PROD error Download Logs' #Se establece el asunto del correo.
                 SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
-                return dict_summary, 404
             else:
                 log_path=response_download_log
                 with gzip.open(log_path, 'rt') as log:
@@ -100,7 +99,6 @@ def around_main(log_key):
                     PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     mail_subject='FAIL API etlaround PROD execution error' #Se establece el asunto del correo.
                     SendMail(dict_summary_str, mail_subject) #Se envia correo electronico.
-                    return dict_summary, 404
                 else:
                     finish=time.time() #Captura del tiempo en el instante que termina de procesar un log.
                     dict_summary[log_key]={
@@ -113,7 +111,6 @@ def around_main(log_key):
                     dict_summary_str=json.dumps(dict_summary, sort_keys=False, indent=4) #Se transforma el diccionario a formato texto.
                     PrintLog(dict_summary_str, date_log) #Se registra en el log de eventos el resumen.
                     shutil.move(log_path, destination_Path+log_key)
-                    return f"{log_key} processed", 200
         except:
             FlagStatus("w") #Se cambia el estado de la bandera "FLAG" a false.
             error=sys.exc_info()[2] #Captura del error generado por el sistema.
@@ -131,5 +128,4 @@ def around_main(log_key):
     else:
         text_print="etlaround_PROD application failure not recognized\n"
         PrintLog(text_print, date_log)
-        return text_print, 404
 
